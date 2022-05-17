@@ -1,0 +1,237 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Music Playlist API",
+        "description": "This is a music streaming service",
+        "contact": {
+            "email": "alecbau60@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/songs": {
+            "get": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Get a list of songs",
+                "description": "Returns list of songs",
+                "operationId": "4ec270d2f77f3c3eebb8bae0e5298221",
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Store a new song",
+                "description": "Validates theme JSON and stores song",
+                "operationId": "7d6c8b4486b62ffcfa8fb6b2407136b0",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "_method": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "PUT"
+                                    },
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Song Title"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "3:00"
+                                    },
+                                    "artist_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Juan Dela Cruz"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Song successfully created"
+                    },
+                    "422": {
+                        "description": "Error with supplied data"
+                    }
+                }
+            }
+        },
+        "/api/v1/songs/{song}": {
+            "get": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Get a song",
+                "description": "Returns a single song",
+                "operationId": "49aab5eef8e3721bbec771f609f1d07b",
+                "parameters": [
+                    {
+                        "name": "song",
+                        "in": "path",
+                        "description": "Id of song",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Song successfully retrieved"
+                    },
+                    "404": {
+                        "description": "Song not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Update an song",
+                "description": "Updates an song with the supplied details",
+                "operationId": "19cd394b1ded2ad5e789a95308fe88f5",
+                "parameters": [
+                    {
+                        "name": "song",
+                        "in": "path",
+                        "description": "Id of song",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "1"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Song Title"
+                                    },
+                                    "duration": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "3:00"
+                                    },
+                                    "artist_name": {
+                                        "type": "string",
+                                        "format": "string",
+                                        "example": "Juan Dela Cruz"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Song successfully updated"
+                    },
+                    "422": {
+                        "description": "Validation Error"
+                    },
+                    "404": {
+                        "description": "Song not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Song"
+                ],
+                "summary": "Delete an song",
+                "description": "Returns a single Song",
+                "operationId": "15caf356b680e83cf3ab4b61c41bb54b",
+                "parameters": [
+                    {
+                        "name": "song",
+                        "in": "path",
+                        "description": "Id of song",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "430a9dc1-ded6-4e04-91c9-c350c692499d"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Song successfully deleted"
+                    },
+                    "404": {
+                        "description": "Song not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Song": {
+                "title": "Song model",
+                "description": "A song that a user uploaded",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "format": "string",
+                        "maxLength": 64,
+                        "example": "Title"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "format": "string",
+                        "maxLength": 64,
+                        "example": "duration"
+                    },
+                    "artist_name": {
+                        "type": "string",
+                        "format": "string",
+                        "maxLength": 255,
+                        "example": "Juan Dela Cruz"
+                    },
+                    "filename": {
+                        "type": "string",
+                        "format": "string",
+                        "maxLength": 255,
+                        "example": "song.mp3"
+                    },
+                    "song": {
+                        "type": "string",
+                        "format": "binary"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
